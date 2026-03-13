@@ -1,0 +1,227 @@
+﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
+	<Frame name="SummonListEntryTemplate" virtual="true">
+		<Size x="186" y="49" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="50" y="-58" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize val="1" />
+		</Backdrop>
+		<Frames>
+			<Button name="RemoveButton" inherits="UIPanelButtonTemplate" parentKey="Remover" text="">
+				<Size x="18" y="18" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="152" y="-18" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						print("A")
+					</OnClick>
+				</Scripts>
+				<NormalTexture inherits="UIPanelScrollBarButton" file="Interface\BUTTONS\UI-Panel-MinimizeButton-Up">
+					<TexCoords left="0.2" right="0.8" top="0.25" bottom="0.75" />
+				</NormalTexture>
+				<PushedTexture inherits="UIPanelScrollBarButton" file="Interface\BUTTONS\UI-Panel-MinimizeButton-Down">
+					<TexCoords left="0.2" right="0.8" top="0.25" bottom="0.75" />
+				</PushedTexture>
+				<DisabledTexture inherits="UIPanelScrollBarButton" file="Interface\BUTTONS\UI-Panel-MinimizeButton-Disabled">
+					<TexCoords left="0.2" right="0.8" top="0.25" bottom="0.75" />
+				</DisabledTexture>
+				<HighlightTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollUpButton-Highlight" alphaMode="ADD">
+					<TexCoords left="0.2" right="0.8" top="0.25" bottom="0.75" />
+				</HighlightTexture>
+			</Button>
+			<Button inherits="SecureUnitButtonTemplate" parentKey="unit" text="Button1">
+				<Size x="127" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="12" y="-12" />
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parent_Name" inherits="GameFontHighlight" parentKey="name" setAllPoints="true" />
+						<Texture name="$parent_Selected" parentKey="selected" setAllPoints="true" hidden="true" file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD" />
+					</Layer>
+				</Layers>
+				<NormalTexture file="Interface\TARGETINGFRAME\UI-TargetingFrame-BarFill" />
+				<HighlightTexture file="Interface\TARGETINGFRAME\UI-TargetingFrame-BarFill" />
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				SummonListEntryTemplate_OnLoad()
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="SummonCheckStatusTemplate" virtual="true">
+		<Size x="32" y="32" />
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentTexture" file="Interface\RaidFrame\ReadyCheck-Waiting" />
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="SummonCheckFrame" hidden="true" parent="UIParent" toplevel="true">
+		<Size x="323" y="100" />
+		<Anchors>
+			<Anchor point="CENTER" x="220" y="221" />
+		</Anchors>
+		<Frames>
+			<Frame name="SummonCheckListenerFrame" setAllPoints="true" hidden="true">
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="SummonCheckPortrait" file="Interface\AddOns\SummonCheck\miniSum.tga">
+							<Size x="50" y="53" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="7" y="-3" />
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer>
+						<Texture file="Interface\RaidFrame\UI-ReadyCheckFrame">
+							<Size x="323" y="97" />
+							<Anchors>
+								<Anchor point="TOPLEFT" />
+							</Anchors>
+							<TexCoords left="0" right="0.6308594" top="0" bottom="0.7578125" />
+						</Texture>
+						<FontString name="SummonCheckFrameText" inherits="GameFontNormal">
+							<Size x="240" />
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" x="20" y="-35" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="SummonCheckFrameYesButton" inherits="UIPanelButtonTemplate" text="Yes">
+						<Size x="119" y="24" />
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativePoint="TOP" x="13" y="-55" />
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								SummonCheck:SendYes()
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="SummonCheckFrameNoButton" inherits="UIPanelButtonTemplate" text="No">
+						<Size x="119" y="24" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOP" x="17" y="-55" />
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("igMainMenuOptionCheckBoxOn");
+								SummonCheck:SendCommMessage("SummCheck", "No", "RAID")
+								SummonCheckFrame:Hide();
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnShow>
+						PlaySound("ReadyCheck");
+					</OnShow>
+				</Scripts>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+
+			</OnLoad>
+			<OnEvent>
+
+			</OnEvent>
+			<OnHide>
+
+			</OnHide>
+		</Scripts>
+	</Frame>
+	<Frame name="SCListHolder" hidden="true" movable="true">
+		<Size x="294" y="278" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="30" y="-104" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString inherits="GameFontNormal" text="Those who need a summon">
+					<Size x="188" y="14" />
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="19" y="-23" />
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="SCLHExit" inherits="UIPanelButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="255" y="-13" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						if InCombatLockdown() == nil then
+						SCListHolder:Hide()
+						end
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\BUTTONS\UI-Panel-MinimizeButton-Up" />
+				<PushedTexture file="Interface\BUTTONS\UI-Panel-MinimizeButton-Down" />
+				<DisabledTexture file="Interface\BUTTONS\UI-Panel-MinimizeButton-Disabled" />
+			</Button>
+			<Button name="AllRequestButton" inherits="UIPanelButtonTemplate" text="Show All Requests">
+				<Size x="148" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="58" y="-236" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						SummonCheck:ShowAllRequests()
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton","RightButton")
+			</OnLoad>
+			<OnDragStart>
+				self:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+</Ui>

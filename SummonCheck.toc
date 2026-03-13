@@ -1,0 +1,7 @@
+## Author: Endar_Ren
+## Interface: 50400
+## Title: SummonCheck
+## Version: 1.0
+embeds.xml
+SummonCheck.lua
+CheckFrame.xml
